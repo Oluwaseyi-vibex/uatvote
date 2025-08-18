@@ -578,8 +578,8 @@ const LandingPage = () => {
               Frequently Asked Questions
             </h2>
             <p className="text-xl text-gray-600">
-              Got questions? We've got answers. Here's everything you need to
-              know about our e-voting system.
+              Got questions? Weve got answers. Heres everything you need to know
+              about our e-voting system.
             </p>
           </div>
 

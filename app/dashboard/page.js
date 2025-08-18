@@ -238,7 +238,7 @@ export default function VoterDashboard() {
               </h3>
             </div>
             <p className="text-gray-600 mb-4">
-              Please complete the CAPTCHA below to verify you're human before
+              Please complete the CAPTCHA below to verify youre human before
               voting.
             </p>
             <ReCAPTCHA

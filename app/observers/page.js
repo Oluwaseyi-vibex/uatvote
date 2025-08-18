@@ -585,7 +585,7 @@ export default function ObserverDashboard() {
                   No Candidates
                 </h3>
                 <p className="text-gray-600">
-                  This election doesn't have any candidates yet.
+                  This election doesnt have any candidates yet.
                 </p>
               </div>
             )}

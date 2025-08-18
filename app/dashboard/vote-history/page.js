@@ -232,7 +232,7 @@ export default function VoteHistory() {
             No Voting History Yet
           </h3>
           <p className="text-gray-600 text-lg mb-6 max-w-md mx-auto">
-            You haven't participated in any elections yet. When you cast your
+            You havent participated in any elections yet. When you cast your
             first vote, it will appear here.
           </p>
           <button

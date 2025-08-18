@@ -30,7 +30,7 @@ export default function Login() {
     if (storedToken) {
       router.replace("/dashboard"); // Redirect logged-in users to the dashboard
     }
-  }, []);
+  }, [router]);
 
   const validateForm = () => {
     const newErrors = {};
@@ -223,7 +223,7 @@ export default function Login() {
             {/* Register Link */}
             <div className="text-center pt-4">
               <p className="text-gray-600">
-                Don't have an account?{" "}
+                Dont have an account?{" "}
                 <Link
                   href="/register"
                   className="text-green-600 hover:text-green-700 font-semibold transition-colors"
