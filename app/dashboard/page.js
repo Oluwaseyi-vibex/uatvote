@@ -242,7 +242,7 @@ export default function VoterDashboard() {
               voting.
             </p>
             <ReCAPTCHA
-              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE}
               onChange={(value) => setCaptchaValue(value)}
               ref={recaptchaRef}
             />
