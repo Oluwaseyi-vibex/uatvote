@@ -34,7 +34,11 @@ export default function DashboardLayout({ children }) {
     setUserName(name || "User");
     setUserEmail(email || "");
 
-    if (!token || role !== "user") {
+    if (!email) {
+      router.push("/login");
+    }
+
+    if (token || role !== "user") {
       toast.error("Access denied");
       // if (role === "admin") {
       //   router.push("/admin");

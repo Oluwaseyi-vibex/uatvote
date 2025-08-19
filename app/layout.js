@@ -3,6 +3,7 @@ import { Toaster } from "react-hot-toast";
 import { poppins } from "@/utils/font";
 import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
+
 export const metadata = {
   title: "UNI POLLING",
   description: "University e-voting system by oluwaseyifunmi ",

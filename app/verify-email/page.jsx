@@ -13,7 +13,9 @@ function VerifyEmailContent() {
   useEffect(() => {
     if (token) {
       axios
-        .get(`http://localhost:5000/auth/verify-email?token=${token}`)
+        .get(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/auth/verify-email?token=${token}`
+        )
         .then(() => {
           toast.success("Email verified successfully!");
           router.push("/login");

@@ -82,7 +82,12 @@ export default function Admin() {
   useEffect(() => {
     const role = localStorage.getItem("role");
     const token = localStorage.getItem("token");
-    if (!token || role !== "admin") {
+
+    if (!token) {
+      router.push("/login");
+    }
+
+    if (token && role !== "admin") {
       toast.error("Access denied");
       router.push("/dashboard");
     }

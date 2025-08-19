@@ -16,6 +16,7 @@ import {
   AlertCircle,
   Loader,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function VoterDashboard() {
   const [elections, setElections] = useState([]);
@@ -29,6 +30,7 @@ export default function VoterDashboard() {
   const recaptchaRef = useRef(null);
   const [votingCandidateId, setVotingCandidateId] = useState(null);
 
+  const router = useRouter();
   useEffect(() => {
     const userEmail = localStorage.getItem("userEmail") || null;
     const name = localStorage.getItem("name") || "User";
