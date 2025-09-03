@@ -7,7 +7,6 @@ import {
   Settings,
   Plus,
   Users,
-  Calendar,
   Trophy,
   UserPlus,
   Vote,
@@ -52,7 +51,7 @@ const useElections = () => {
 };
 
 export default function Admin() {
-  const { elections, setElections, loading, refetch } = useElections();
+  const { elections, loading, refetch } = useElections();
   const [selectedElection, setSelectedElection] = useState("");
   const [formData, setFormData] = useState({
     name: "",
@@ -87,7 +86,7 @@ export default function Admin() {
       router.push("/login");
     }
 
-    if (token && role !== "admin") {
+    if (token && role !== "ADMIN" && role !== "SUPER_ADMIN") {
       toast.error("Access denied");
       router.push("/dashboard");
     }

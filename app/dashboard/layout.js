@@ -37,17 +37,6 @@ export default function DashboardLayout({ children }) {
     if (!email) {
       router.push("/login");
     }
-
-    if (token || role !== "user") {
-      toast.error("Access denied");
-      // if (role === "admin") {
-      //   router.push("/admin");
-      // } else if (role === "observers") {
-      //   router.push("/observers");
-      // } else {
-      //   router.push("/login");
-      // }
-    }
   }, [router]);
 
   const handleLogout = () => {

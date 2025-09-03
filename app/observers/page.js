@@ -50,7 +50,7 @@ export default function ObserverDashboard() {
   useEffect(() => {
     const role = localStorage.getItem("role");
     const token = localStorage.getItem("token");
-    if (!token || (role !== "observer" && role !== "admin")) {
+    if (token && role !== "OBSERVER" && role !== "SUPER_ADMIN") {
       toast.error("Access denied");
       router.push("/dashboard");
     }

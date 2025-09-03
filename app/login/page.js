@@ -27,6 +27,7 @@ export default function Login() {
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
+    console.log;
     if (storedToken) {
       router.replace("/dashboard"); // Redirect logged-in users to the dashboard
     }
@@ -67,12 +68,14 @@ export default function Login() {
       localStorage.setItem("userEmail", email);
       localStorage.setItem("role", data.role);
       localStorage.setItem("name", data.name);
-      if (data.role === "student") {
+      if (data.role === "STUDENT") {
         router.push("/dashboard");
       } else if (data.role === "admin") {
         router.push("/admin");
       } else if (data.role === "observers") {
         router.push("/observers");
+      } else if (data.role === "SUPER_ADMIN") {
+        router.push("/superAdmin");
       }
     } catch (error) {
       setLoading(false);
