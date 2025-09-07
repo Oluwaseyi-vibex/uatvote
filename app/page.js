@@ -286,12 +286,17 @@ const LandingPage = () => {
                 Contact
               </a>
               <div className="pt-4 border-t space-y-3">
-                <button className="block w-full text-left text-green-600 font-medium">
-                  Login
-                </button>
-                <button className="block w-full px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg text-center">
-                  Register
-                </button>
+                <Link href={"/login"}>
+                  <button className="block w-full text-left text-green-600 font-medium">
+                    Login
+                  </button>
+                </Link>
+
+                <Link href={"/register"}>
+                  <button className="block w-full px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg text-center">
+                    Register
+                  </button>
+                </Link>
               </div>
             </div>
           </div>

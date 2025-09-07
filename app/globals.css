@@ -3,3 +3,11 @@
 * {
   /* border: solid red 0.5px; */
 }
+
+button {
+  cursor: pointer;
+}
+
+Link {
+  cursor: pointer;
+}
