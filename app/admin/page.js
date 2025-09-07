@@ -17,7 +17,10 @@ import {
   User,
   FileText,
   Crown,
+  SquarePercentIcon,
+  EyeIcon,
 } from "lucide-react";
+import Link from "next/link";
 
 // Custom hook for fetching elections
 const useElections = () => {
@@ -65,6 +68,7 @@ export default function Admin() {
   });
   const [adminName, setAdminName] = useState("");
   const [adminEmail, setAdminEmail] = useState("");
+  const [role, setRole] = useState("");
   const [addingCandidate, setAddingCandidate] = useState(false);
   const [creatingElection, setCreatingElection] = useState(false);
   const router = useRouter();
@@ -73,6 +77,9 @@ export default function Admin() {
   useEffect(() => {
     const name = localStorage.getItem("name") || "Admin";
     const email = localStorage.getItem("userEmail") || "";
+    const role = localStorage.getItem("role");
+
+    setRole(role);
     setAdminName(name);
     setAdminEmail(email);
   }, []);
@@ -177,6 +184,53 @@ export default function Admin() {
     router.push("/login");
   };
 
+  // Inside Admin component
+
+  const handleDeleteCandidate = async (electionId, candidateId) => {
+    if (!confirm("Are you sure you want to delete this candidate?")) return;
+
+    try {
+      const token = localStorage.getItem("token");
+      await axios.delete(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/elections/${electionId}/candidate/${candidateId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      toast.success("Candidate deleted successfully");
+      refetch(); // Refresh elections after deletion
+    } catch (err) {
+      console.error(err);
+      toast.error(err.response?.data?.message || "Error deleting candidate");
+    }
+  };
+
+  // Handle Delete Election
+  const handleDeleteElection = async (electionId) => {
+    if (
+      !confirm(
+        "Are you sure you want to delete this election? This will also remove all its candidates and votes."
+      )
+    ) {
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem("token");
+      await axios.delete(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/elections/delete/election/${electionId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      toast.success("Election deleted successfully");
+      refetch(); // refresh list
+    } catch (err) {
+      console.error(err);
+      toast.error(err.response?.data?.message || "Error deleting election");
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center py-16">
@@ -215,13 +269,53 @@ export default function Admin() {
               </div>
             </div>
           </div>
-          <button
-            onClick={handleLogout}
-            className="flex items-center space-x-2 bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-md"
-          >
-            <LogOut className="w-5 h-5" />
-            <span>Logout</span>
-          </button>
+
+          <div className="flex items-center gap-4">
+            {role === "SUPER_ADMIN" && (
+              <Link
+                href="/superAdmin"
+                className="inline-flex items-center gap-2 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm"
+              >
+                <SquarePercentIcon />
+                SUPER_ADMIN
+              </Link>
+            )}
+
+            <Link
+              href="/observers"
+              className="inline-flex items-center gap-2 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm"
+            >
+              <EyeIcon />
+              OBSERVE
+            </Link>
+
+            <Link
+              href="/dashboard"
+              className="inline-flex items-center gap-2 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm"
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                />
+              </svg>
+              Dashboard
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="flex items-center space-x-2 bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-md"
+            >
+              <LogOut className="w-5 h-5" />
+              <span>Logout</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -483,7 +577,7 @@ export default function Admin() {
             </div>
           </div>
 
-          <div className="space-y-4">
+          {/* <div className="space-y-4">
             {elections.map((election) => (
               <div
                 key={election.id}
@@ -502,6 +596,62 @@ export default function Admin() {
                 <div className="flex items-center text-sm text-gray-500">
                   <Users className="w-4 h-4 mr-1" />
                   {election.candidates?.length || 0} candidates registered
+                </div>
+              </div>
+            ))}
+          </div> */}
+          <div className="space-y-4">
+            {elections.map((election) => (
+              <div
+                key={election.id}
+                className="border border-gray-200 rounded-xl p-6 hover:border-green-200 transition-colors"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-xl font-bold text-gray-900">
+                    {election.name}
+                  </h3>
+                  <div className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold flex items-center">
+                    <CheckCircle className="w-4 h-4 mr-1" />
+                    Active
+                  </div>
+                </div>
+                <p className="text-gray-600 mb-4">{election.description}</p>
+
+                <button
+                  onClick={() => handleDeleteElection(election.id)}
+                  className="px-3 py-1 text-sm bg-red-500 hover:bg-red-600 text-white rounded-lg shadow-sm"
+                >
+                  Delete Election
+                </button>
+                <div className="mt-4">
+                  <h4 className="font-semibold text-gray-800 mb-2">
+                    Candidates
+                  </h4>
+                  {election.candidates?.length > 0 ? (
+                    <ul className="space-y-2">
+                      {election.candidates.map((candidate) => (
+                        <li
+                          key={candidate.id}
+                          className="flex items-center justify-between bg-gray-50 px-4 py-2 rounded-lg"
+                        >
+                          <span>
+                            {candidate.name} ({candidate.party}) –{" "}
+                            {candidate.position}
+                          </span>
+                          <button
+                            onClick={() =>
+                              handleDeleteCandidate(election.id, candidate.id)
+                            }
+                            className="px-3 py-1 text-sm bg-red-500 hover:bg-red-600 text-white rounded-lg shadow-sm"
+                          >
+                            Delete
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="text-sm text-gray-500">No candidates yet.</p>
+                  )}
                 </div>
               </div>
             ))}
