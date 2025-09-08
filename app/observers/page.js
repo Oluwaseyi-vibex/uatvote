@@ -54,14 +54,14 @@ export default function ObserverDashboard() {
   }, []);
 
   // Restrict access
-  useEffect(() => {
-    const role = localStorage.getItem("role");
-    const token = localStorage.getItem("token");
-    if (token && role !== "OBSERVER" && role !== "SUPER_ADMIN") {
-      toast.error("Access denied");
-      router.push("/dashboard");
-    }
-  }, [router]);
+  // useEffect(() => {
+  //   const role = localStorage.getItem("role");
+  //   const token = localStorage.getItem("token");
+  //   if (token && role !== "OBSERVER" && role !== "SUPER_ADMIN") {
+  //     toast.error("Access denied");
+  //     router.push("/dashboard");
+  //   }
+  // }, [router]);
 
   // Fetch elections from database
   useEffect(() => {

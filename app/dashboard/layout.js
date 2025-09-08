@@ -17,6 +17,7 @@ import {
   User,
   Settings,
   Bell,
+  Eye,
 } from "lucide-react";
 
 export default function DashboardLayout({ children }) {
@@ -58,6 +59,11 @@ export default function DashboardLayout({ children }) {
       href: "/dashboard/vote-history",
       label: "Vote History",
       icon: History,
+    },
+    {
+      href: "/observers",
+      label: "Observe",
+      icon: Eye,
     },
   ];
 
